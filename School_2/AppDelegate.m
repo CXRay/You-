@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import <Parse/Parse.h>
+#import <AMapNaviKit/MAMapKit.h>
+#import <AMapNaviKit/AMapNaviKit.h>
+
 
 @interface AppDelegate ()
 
@@ -17,6 +21,33 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.i = 0;
+    [MAMapServices sharedServices].apiKey = @"833bb9fff4fcbb9d36c81c156fe7b368";
+    [AMapNaviServices sharedServices].apiKey =@"833bb9fff4fcbb9d36c81c156fe7b368";
+    
+    // [Optional] Power your app with Local Datastore. For more info, go to
+    // https://parse.com/docs/ios_guide#localdatastore/iOS
+    [Parse enableLocalDatastore];
+    
+    // Initialize Parse.
+    [Parse setApplicationId:@"DDKv3CQyUlfjdt4DFqOJISgxiPndF2d7w0kAgO71"
+                  clientKey:@"tL15fhoWtOzRumoWVpDi4GsDarKmmkmbyzlhq60f"];
+    
+    // [Optional] Track statistics around application opens.
+    
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
+    NSString *userName = [[NSUserDefaults standardUserDefaults]stringForKey:@"user_name"];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
+    if (userName != nil) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *main = [storyBoard instantiateViewControllerWithIdentifier:@"MainViewController"];
+        UINavigationController *mainNav =[[UINavigationController alloc]initWithRootViewController:main];
+        self.window.rootViewController = mainNav;
+    
+    }
+
+ 
     return YES;
 }
 
